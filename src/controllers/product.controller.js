@@ -1,4 +1,4 @@
-import productValidator from "../validators/productValidator.js"
+import productValidator from "../validators/product.validator.js"
 
 class productController {
 

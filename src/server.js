@@ -6,25 +6,23 @@ import mongoose from "mongoose"
 import Handlebars from "handlebars"
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access"
 import path from "path"
-import initializePassport from "./src/config/passport.config.js"
+import initializePassport from "../src/config/passport.config.js"
 import passport from "passport"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-import config from "./src/config/config.js"
+import config from "../src/config/config.js"
 
 //Configuracion del servidor
 const app = express()
 
 //MongoDB local
 mongoose.set('strictQuery', true)
-mongoose.connect(config.MONGO_URI, (error) => {
-  if(error) {
-    console.log('Error al conectar a MongoDB', error)
-  } else {
-    console.log('Conectado a MongoDB')
-    process.exit
-  }
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
+  .then(() => console.log("DB is connected"))
+  .catch((err) => console.error(err));
 
 //Handlebars
 app.engine('hbs', handlebars.engine({
@@ -55,8 +53,9 @@ app.use(passport.session())
       origin:
         process.env.NODE_ENV === "production"
           ? process.env.CLIENT_URL
-          : "http://localhost:3000",
+          : "http://localhost:8080",
     }))
 
  
   
+    app.listen(config.PORT, () => console.log('Server on port', config.PORT))

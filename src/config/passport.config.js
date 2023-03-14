@@ -1,7 +1,7 @@
 import passport from 'passport';
 import jwt from 'passport-jwt';
 import local from 'passport-local'
-import usersDao from '../dao/UsersDao.js'
+import usersDao from '../daos/users.dao.js'
 import { hashPassword as createHash } from '../utils/crypted.js'; 
 
 const LocalStrategy = local.Strategy;
