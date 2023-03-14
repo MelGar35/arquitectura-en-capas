@@ -1,0 +1,20 @@
+import sessionServices from "../services/session.services.js"
+import { comparePassword } from "../utils/crypted.js"
+
+
+class sessionValidator {
+
+
+  async checkAccount(email, password) {
+
+    const user = await sessionServices.checkEmail(email)
+
+    if(!email || !password) return "No email or password"
+    if(!user) return "Not an User"
+    if(!comparePassword(user,password)) return "Wrong Password"
+
+    return user
+  }
+}
+
+export default new sessionValidator()
