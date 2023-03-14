@@ -1,51 +1,18 @@
-import productsDao from "../daos/dbManager/products.dao.js";
-import { Router } from 'express';
+import { Router } from "express"
+import {uploader} from "../utils/multer.js"
+import productsController from "../controllers/product.controller.js"
 
-const router = Router();
 
-router.get('/', async (req, res) => {
-  try {
-    const products = await productsDao.getAll();
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
+const router = Router()
 
-router.get('/:id', async (req, res) => {
-  try {
-    const product = await productsDao.getById(req.params.id);
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
+router.get("/", productsController.getProducts) 
+router.get("/:pid", productsController.getProductById)
+router.post("/", uploader.single('thumbnail'), productsController.createProduct)
+router.put("/:pid", productsController.editProduct)
+router.delete("/:pid", productsController.deleteProduct)
 
-router.post('/', async (req, res) => {
-  try {
-    const product = await productsDao.create(req.body);
-    res.redirect("/");
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
 
-router.put('/:id', async (req, res) => {
-  try {
-    const product = await productsDao.update(req.params.id, req.body);
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
+export default router
 
-router.delete('/:id', async (req, res) => {
-  try {
-    const product = await productsDao.delete(req.params.id);
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
 
-export default router;
+

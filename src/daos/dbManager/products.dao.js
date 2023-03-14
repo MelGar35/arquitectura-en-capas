@@ -1,26 +1,43 @@
-import {productModel} from "../../models/product.model.js";
+import {productModel} from "../../models/product.model.js"
 
-class ProductDao {
-    async getAll() {
-        return await productModel.find()
-    }
-    async getById(id) {
-        return await productModel.findById(id)
-    }
+class productDao {
 
-    async create(data) {
-        return await productModel.create(data)
+    async getProducts(limit, query, sort, page) {
+      if ((limit === 0 || !limit)) {
+        return await productModel.paginate(query, {paginate:false, page:page || 1, sort: {price:sort || 0}})
+      } else {
+        return await productModel.paginate(query, {limit:limit || false, page:page || 1, sort: {price:sort || 0}})
+      }
+    } 
+  
+  
+    async getProductById(id) {
+        return productModel.findById(id)
     }
-
-    async update(id, data) {
-        return await productModel.findByIdAndUpdate(id, data, {
-            new: true
-        })
+  
+  
+    async createProduct(product) {
+      try {
+        return await productModel.create(product)
+      } catch (error) {
+        return error.message
+      }
     }
-
-    async delete(id) {
-        return await productModel.findByIdAndDelete(id)
+  
+    async updateProduct(id, updatedProduct) {
+      try {
+        return await productModel.findByIdAndUpdate(id, updatedProduct, { new: true })
+        
+      } catch (error) {
+       console.log(error) 
+      }
     }
-}
-
-export default new ProductDao()
+  
+    async deleteProduct(id) {
+      return await productModel.findByIdAndDelete(id)
+    }
+  }
+  
+  export default new productDao()
+  
+  

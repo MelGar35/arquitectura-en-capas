@@ -1,16 +1,15 @@
-import express from 'express';
-import handlebars from 'express-handlebars';
-import __dirname from './dirname.js';
-import productsRoutes from './routes/products.routes.js'
-import viewsRoutes from "./routes/views.routes.js"
-import mongoose from 'mongoose';
-import Handlebars from 'handlebars';
-import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access'
+import express from "express"
+import handlebars from "express-handlebars"
+import __dirname from "./dirname.js"
+import routes from "../src/routes/index.routes.js"
+import mongoose from "mongoose"
+import Handlebars from "handlebars"
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access"
 import path from "path"
-import initializepassport from "./src/config/passport.config.js"
-import passport from 'passport'
+import initializePassport from "./src/config/passport.config.js"
+import passport from "passport"
 import cors from "cors"
-import cookieParser from 'cookie-parser'
+import cookieParser from "cookie-parser"
 import config from "./src/config/config.js"
 
 //Configuracion del servidor
@@ -32,18 +31,32 @@ app.engine('hbs', handlebars.engine({
     extname: '.hbs',
     defaultLayout: 'main.hbs',
     handlebars: allowInsecurePrototypeAccess(Handlebars)
-  }));
+  }))
   
   app.set('view engine', 'hbs')
   app.set('views', `${__dirname}/views`)
   app.use(express.static(`${__dirname}/public`))
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+  app.use(cookieParser())
   
  //Routes
-  app.use('/api/products', productsRoutes)
+  app.use('/api', routes)
 
-  app.use('/', viewsRoutes);
+//Passport
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
+//Cors
+  app.use(
+    cors({
+      credentials: true,
+      origin:
+        process.env.NODE_ENV === "production"
+          ? process.env.CLIENT_URL
+          : "http://localhost:3000",
+    }))
+
  
-  app.listen(3000, () => { console.log('Servidor escuchando en el puerto 3000') })
   

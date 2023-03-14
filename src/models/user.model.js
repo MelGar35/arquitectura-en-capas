@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose'
 
-const userCollection = 'users';
+const userCollection = 'users'
 
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
