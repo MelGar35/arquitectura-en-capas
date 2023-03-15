@@ -34,10 +34,10 @@ class cartDao {
       {
         _id: cid,
         products: { $elemMatch: { _id: pid } }
-      }, // FILTER
+      },//filter
       {
         $set: {
-          "products.$.quantity": quantity, // UPDATE
+          "products.$.quantity": quantity,//update
         },
       },
       { new: true, safe: true, upsert: true })

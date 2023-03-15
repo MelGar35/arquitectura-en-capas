@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, required: true, default: 'user', enum: ['user', 'admin'] },
+  role: { type: String, required: true, default: 'user', enum: ['user', 'admin'] }, //definimos que las opc son user o admin
 })
 
 export const userModel = model(userCollection, userSchema)

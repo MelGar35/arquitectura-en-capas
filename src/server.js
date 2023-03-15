@@ -15,6 +15,8 @@ import config from "../src/config/config.js"
 //Configuracion del servidor
 const app = express()
 
+app.listen(config.PORT, () => console.log(`Escuchando en el puerto ${config.PORT}`))
+
 //MongoDB local
 mongoose.set('strictQuery', true)
 mongoose.connect(config.MONGO_URI, {
@@ -56,6 +58,3 @@ app.use(passport.session())
           : "http://localhost:8080",
     }))
 
- 
-  
-    app.listen(config.PORT, () => console.log('Server on port', config.PORT))

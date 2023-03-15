@@ -55,8 +55,8 @@ class cartController {
 
   async updateQuantityFromCart(req, res) {
 
-    const { cid, pid } = req.params;
-    const { quantity } = req.body;
+    const { cid, pid } = req.params
+    const { quantity } = req.body
 
     try {
       await cartValidator.updateQuantityFromCart(cid, pid, quantity)
@@ -84,7 +84,7 @@ class cartController {
     let {cid} = (req.params)
     try {
       await cartValidator.emptyCart(cid)
-      res.json({ status: 200, message: 'Cart Eliminated' })
+      res.json({ status: 200, message: 'Cart Empty' })
     } catch (error) {
       res.json({ error })
     }

@@ -1,5 +1,5 @@
 import sessionValidator from '../validators/session.validator.js'
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"
 
 class sessionsController {
 
@@ -34,7 +34,7 @@ class sessionsController {
     if (checkedAccount === 'IncorrectPassword') return res.send('Incorrect Password')
     if (checkedAccount) {
       const token = jwt.sign({ email, role: checkedAccount.role }, 'coderSecret', { expiresIn: '20m' }, { withCredentials: true });
-      res.cookie('coderCokieToken', token, { maxAge: 60 * 60 * 60, httpOnly: true, withCredentials: false });
+      res.cookie('coderCookieToken', token, { maxAge: 60 * 60 * 60, httpOnly: true, withCredentials: false })
       res.redirect('/api/session/current')
 
     }

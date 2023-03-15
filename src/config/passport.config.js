@@ -4,25 +4,25 @@ import local from 'passport-local'
 import usersDao from '../daos/users.dao.js'
 import { hashPassword as createHash } from '../utils/crypted.js'; 
 
-const LocalStrategy = local.Strategy;
+const LocalStrategy = local.Strategy
 const headersExtractor = (req) => {
-  let token = null;
+  let token = null
   if (req && req.headers) {
-    token = req.headers["Authorization"];
+    token = req.headers["Authorization"]
   }
-  return token;
+  return token
 }
 
 const cookieExtractor = (req) => {
-  let token = null;
+  let token = null
   if (req && req.cookies) {
-    token = req.cookies["coderCokieToken"];
+    token = req.cookies["coderCookieToken"]
   }
-  return token;
+  return token
 }
 
-const JWTStrategy = jwt.Strategy;
-const ExtractJWT = jwt.ExtractJwt;
+const JWTStrategy = jwt.Strategy
+const ExtractJWT = jwt.ExtractJwt
 
 const initializePassport = () => {
   passport.use(
@@ -43,12 +43,12 @@ const initializePassport = () => {
 
   passport.use('register', new LocalStrategy(
     { passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
-      const { first_name, last_name, email, age,role } = req.body;
+      const { first_name, last_name, email, age, role } = req.body;
       try {
         let user = await usersDao.getByEmail(username)
 
         if (user) {
-          console.log('Usuario ya existe')
+          console.log('Usuario existente')
           return done(null, false)
         }
         const newUser = {

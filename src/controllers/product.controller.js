@@ -59,13 +59,12 @@ class productController {
     let pid = (req.params.pid)
     try {
       await productValidator.deleteProduct(pid)
-      res.json({ status: 200, message: 'Producto producto eliminado' })
+      res.json({ status: 200, message: 'Producto eliminado' })
     } catch (error) {
       res.json({ error })
     }
 
   }
-
 
 }
 
