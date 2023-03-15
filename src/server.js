@@ -12,10 +12,12 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import config from "../src/config/config.js"
 
+
 //Configuracion del servidor
 const app = express()
 
 app.listen(config.PORT, () => console.log(`Escuchando en el puerto ${config.PORT}`))
+
 
 //MongoDB local
 mongoose.set('strictQuery', true)
@@ -43,10 +45,7 @@ app.engine('hbs', handlebars.engine({
  //Routes
   app.use('/api', routes)
 
-//Passport
-initializePassport()
-app.use(passport.initialize())
-app.use(passport.session())
+
 
 //Cors
   app.use(

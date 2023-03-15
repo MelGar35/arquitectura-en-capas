@@ -31,10 +31,8 @@ class productController {
 
   async createProduct(req, res) {
     const { title, description, category, price, thumbnail, code, stock } = req.body;
-    !req.file && res.status(400).send({ status: "error", error: "No se pudo guardar la imagen" })
-    let thumbnailName = req.file.filename || 'Sin Imagen';
     try {
-      const addedProduct = await productValidator.createProduct(title, description, category, price, thumbnailName, code, stock)
+      const addedProduct = await productValidator.createProduct(title, description, category, price, thumbnail, code, stock)
       res.status(201).json({ info: 'Producto Agregado', addedProduct })
     } catch (error) {
       console.log("Ha ocurrido un error: \n", error)
