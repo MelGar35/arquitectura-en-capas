@@ -72,7 +72,7 @@ class cartController {
     const { cid, pid } = req.params;
     try {
       await cartValidator.deleteProductFromCart(cid, pid)
-      res.json({message:`PID: ${pid} has been deleted from cart ${cid}`, payload : await cartValidator.getCartById(cid)})
+      res.json({message:`Pid: ${pid} has been deleted from cart ${cid}`, payload : await cartValidator.getCartById(cid)})
     } catch (error) {
       res.json({error:error.message})
     }

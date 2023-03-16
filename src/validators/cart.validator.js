@@ -31,7 +31,7 @@ class cartsValidator {
   }
 
   async updateCart(cid, product) {
-    //VERIFICANDO EXISTENCIA DE PRODUCTO EN BASE DE DATOS
+    //chequeando productos en bd
    let enExistencia = await productServices.findById(product.product)
     try {
       if (!cid) throw new Error("Missing CID")

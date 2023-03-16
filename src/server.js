@@ -18,6 +18,9 @@ const app = express()
 
 app.listen(config.PORT, () => console.log(`Escuchando en el puerto ${config.PORT}`))
 
+//Passport
+initializePassport()
+app.use(passport.initialize())
 
 //MongoDB local
 mongoose.set('strictQuery', true)

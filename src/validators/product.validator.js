@@ -34,7 +34,7 @@ class productValidator {
 
   async editProduct(pid, updatedProduct) {
     try {
-      if (!pid) throw new Error("Missing PID")
+      if (!pid) throw new Error("Missing Product Id")
       if(updatedProduct.code) throw new Error("Code field cannot be changed")
       await productServices.editProduct(pid,newProduct)
     } catch (error) {
@@ -45,7 +45,7 @@ class productValidator {
 
   async deleteProduct(pid) {
     try {
-      if (!pid) throw new Error("Missing PID")
+      if (!pid) throw new Error("Missing product Id")
       await productServices.deleteProduct(pid)
     } catch (error) {
       return error;
