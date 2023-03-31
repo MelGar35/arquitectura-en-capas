@@ -21,6 +21,7 @@ app.listen(config.PORT, () => console.log(`Escuchando en el puerto ${config.PORT
 //Passport
 initializePassport()
 app.use(passport.initialize())
+app.use(passport.session())
 
 //MongoDB local
 mongoose.set('strictQuery', true)
@@ -37,18 +38,15 @@ app.engine('hbs', handlebars.engine({
     defaultLayout: 'main.hbs',
     handlebars: allowInsecurePrototypeAccess(Handlebars)
   }))
-  
   app.set('view engine', 'hbs')
   app.set('views', `${__dirname}/views`)
-  app.use(express.static(`${__dirname}/public`))
+  app.use(express.static(path.join`${__dirname}/public`))
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(cookieParser())
   
  //Routes
   app.use('/api', routes)
-
-
 
 //Cors
   app.use(

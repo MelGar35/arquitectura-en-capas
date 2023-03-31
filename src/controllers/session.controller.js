@@ -1,5 +1,6 @@
 import sessionValidator from '../validators/session.validator.js'
 import jwt from "jsonwebtoken"
+import currentUserDto from "../daos/dto/currentUser.dto.js"
 
 class sessionsController {
 
@@ -28,13 +29,14 @@ class sessionsController {
     const { email, password } = req.body;
 
     const checkedAccount = await sessionValidator.checkAccount(email, password)
+    const userToSign = new currentUserDto(checkedAccount)
 
     if (checkedAccount === 'NoMailNorPassword') return res.send('Mail or password missing')
     if (checkedAccount === 'NoUser') return res.send('User has not been found')
     if (checkedAccount === 'IncorrectPassword') return res.send('Incorrect Password')
     if (checkedAccount) {
-      const token = jwt.sign({ email, role: checkedAccount.role }, 'coderSecret', { expiresIn: '20m' }, { withCredentials: true });
-      res.cookie('coderCookieToken', token, { maxAge: 60 * 60 * 60, httpOnly: true, withCredentials: false })
+      const token = jwt.sign({ user: userToSign.email, role: userToSign.role }, 'coderSecret', { expiresIn: '15m' }, { withCredentials: true });
+      res.cookie('coderCookieToken', token, { maxAge: 60 * 60 * 60, httpOnly: true, withCredentials: false });
       res.redirect('/api/session/current')
 
     }

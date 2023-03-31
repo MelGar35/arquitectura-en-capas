@@ -1,6 +1,7 @@
 import passport from 'passport';
 import jwt from 'passport-jwt';
 import local from 'passport-local'
+import usersDto from "../daos/dto/users.dto.js"
 import usersDao from '../daos/users.dao.js'
 import { hashPassword as createHash } from '../utils/crypted.js'; 
 
@@ -51,17 +52,18 @@ const initializePassport = () => {
           console.log('Usuario existente')
           return done(null, false)
         }
-        const newUser = {
-          first_name,
-          last_name,
-          username: first_name + ' ' + last_name,
-          email,
-          age,
-          role,
-          password: createHash(password)
-        }
-        console.log(newUser)
-        let result = await usersDao.create(newUser)
+        //const newUser = {
+        // first_name,
+        //last_name,
+        //username: first_name + ' ' + last_name,
+        //email,
+        //age,
+        //role,
+        //password: createHash(password)}
+        const createdUser = new usersDto(first_name, last_name, email, age, role)
+        createdUser.password = createHash(password)
+
+        let result = await usersDao.create(createdUser)
         return done(null, result)
       } catch (error) {
         done(error)

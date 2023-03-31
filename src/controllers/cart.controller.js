@@ -90,7 +90,17 @@ class cartController {
     }
 
   }
+  async purchase(req, res) {
+    let { cid } = (req.params)
 
+    try {
+      await cartValidator.purchase(cid)
+    } catch (error) {
+      res.json({ error })
+
+    }
+
+  }
 
 }
 
