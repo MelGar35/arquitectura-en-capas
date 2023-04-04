@@ -1,5 +1,6 @@
-import sessionServices from "../services/session.services.js"
+//import sessionServices from "../services/session.services.js"
 import { comparePassword } from "../utils/crypted.js"
+import { UserService as sessionServices } from '../repositories/index.js'
 
 
 class sessionValidator {

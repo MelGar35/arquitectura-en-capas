@@ -1,7 +1,7 @@
 const authorization = (role) => {
     return async (req, res, next) => {
       if(!req.user) {
-        return res.status(401).json({ message: "Not logged in" })
+        return res.status(401).json({ message: "No estas logueado" })
       }
   
       let permiso = false

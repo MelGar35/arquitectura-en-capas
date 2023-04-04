@@ -40,14 +40,15 @@ app.engine('hbs', handlebars.engine({
   }))
   app.set('view engine', 'hbs')
   app.set('views', `${__dirname}/views`)
-  app.use(express.static(path.join`${__dirname}/public`))
+  app.use(express.static(path.join(__dirname, '/src/public')));
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(cookieParser())
   
  //Routes
-  app.use('/api', routes)
-
+ app.get('/', (req, res) => res.redirect('/api'))
+ app.use('/api', routes)
+ 
 //Cors
   app.use(
     cors({

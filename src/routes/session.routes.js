@@ -7,7 +7,7 @@ import sessionsController from "../controllers/session.controller.js"
 const router = Router()
 
 router.get("/login", sessionsController.getLoginPage) 
-router.get("/current", passportCall("jwt"), authorization(["admin"]), passport.authenticate("jwt", { session: false}), sessionsController.getCurrentProfile)
+router.get('/current', passportCall('jwt'), passport.authenticate('jwt', { session: false }), sessionsController.getCurrentProfile)
 router.get("/register", sessionsController.getRegisterPage) 
 router.get("/failedregister", sessionsController.getFailedRegisterPage)
 router.post("/login", sessionsController.postToLogin) 

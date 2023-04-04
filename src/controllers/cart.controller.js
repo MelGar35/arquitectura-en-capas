@@ -1,4 +1,8 @@
 import cartValidator from "../validators/cart.validator.js"
+import config from "../config/config.js"
+import nodemailer from "nodemailer"
+
+//insertar nodemailer transport 
 
 class cartController {
 

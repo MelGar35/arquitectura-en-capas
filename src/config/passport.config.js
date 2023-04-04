@@ -2,7 +2,7 @@ import passport from 'passport';
 import jwt from 'passport-jwt';
 import local from 'passport-local'
 import usersDto from "../daos/dto/users.dto.js"
-import usersDao from '../daos/users.dao.js'
+import usersDao from '../daos/mongo/users.mongo.js'
 import { hashPassword as createHash } from '../utils/crypted.js'; 
 
 const LocalStrategy = local.Strategy
@@ -44,7 +44,7 @@ const initializePassport = () => {
 
   passport.use('register', new LocalStrategy(
     { passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
-      const { first_name, last_name, email, age, role } = req.body;
+      const { first_name, last_name, email, age, phone, role } = req.body;
       try {
         let user = await usersDao.getByEmail(username)
 
@@ -60,7 +60,7 @@ const initializePassport = () => {
         //age,
         //role,
         //password: createHash(password)}
-        const createdUser = new usersDto(first_name, last_name, email, age, role)
+        const createdUser = new usersDto(first_name, last_name, email, age, phone,  role)
         createdUser.password = createHash(password)
 
         let result = await usersDao.create(createdUser)

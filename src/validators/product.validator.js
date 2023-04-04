@@ -1,4 +1,5 @@
-import productServices from "../services/product.services.js"
+//import productServices from "../services/product.services.js"
+import { ProductService as productServices } from "../repositories/index.js";
 
 class productValidator {
 
@@ -24,7 +25,7 @@ class productValidator {
   async createProduct(title, description, category, price, thumbnailName, code, stock) {
     try {
       if (!title || !description || !category || !price || !thumbnailName || !code || !stock) {
-        throw new Error("Missing Fields")
+        throw new Error("Falta completar campos")
       }
       await productServices.createProduct(title, description, category, price, thumbnailName, code, stock)
     } catch (error) {
@@ -35,7 +36,7 @@ class productValidator {
   async editProduct(pid, updatedProduct) {
     try {
       if (!pid) throw new Error("Missing Product Id")
-      if(updatedProduct.code) throw new Error("Code field cannot be changed")
+      if(updatedProduct.code) throw new Error("Campo code no se puede modificar")
       await productServices.editProduct(pid,newProduct)
     } catch (error) {
       return error;
