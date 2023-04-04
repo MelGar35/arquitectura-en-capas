@@ -80,7 +80,7 @@ class cartsValidator {
 
   async purchase(cid, user) {
 
-    const client = twilio(config.twilio_account, config.twilio_token)
+    const client = twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN)
     const cartInExistence = await cartsServices.getCartById(cid)
     if (!cartInExistence) throw new Error("Missing Cart Id")
     if (!user) throw new Error("Missing user")
@@ -99,21 +99,21 @@ class cartsValidator {
 
 
 
-        if (product.quantity === product.product.stock) { // Si el stock y la cantidad necesitada es igual, tenemos que sacar eso del carrito original cliente y pasarlo al ticket
+        if (product.quantity === product.product.stock) { 
 
-          newListProducts.push(product) // Agregamos los productos que cumplieron las condiciones
+          newListProducts.push(product) 
           amount += product.quantity * product.product.price
           await cartsServices.deleteProductFromCart(cid, (product._id).toHexString())
-          await ProductService.updateProduct(productToUpdate, { stock: 0 }) // Descontamos del stock de la DB
+          await ProductService.updateProduct(productToUpdate, { stock: 0 }) 
 
 
         } else if (product.quantity <= product.product.stock) {
 
 
-          let newProductQuantity = product.product.stock - product.quantity // Calculamos que es lo que nos queda del stock original
+          let newProductQuantity = product.product.stock - product.quantity 
           amount += product.quantity * product.product.price
-          newListProducts.push(product) // Agregamos los productos que cumplieron las condiciones
-          await ProductService.updateProduct(productToUpdate, { stock: newProductQuantity }) // Descontamos del stock de la DB
+          newListProducts.push(product)
+          await ProductService.updateProduct(productToUpdate, { stock: newProductQuantity }) 
           await cartsServices.deleteProductFromCart(cid, (product._id).toHexString())
 
 
@@ -138,9 +138,9 @@ class cartsValidator {
       let unOrderedProducts = await cartsServices.getCartById(cid)
 
       client.messages.create({
-        body: 'Has realizado una compra',
-        from: config.twilio_number,
-        to: '+541167435985' // EN EL TELEFONO SIEMPRE AGREGAR EL PREFIJO +54, SI NO, NO LO VA A TOMARK
+        body: `Gracias, ${nombre}, tu solicitud de producto ${producto}, ha sido aprobada`,
+        from: config.TWILIO_PHONE_NUMBER,
+        to: "+541153255380"
       })
       return { ticket: ticket, unOrderedProducts: unOrderedProducts, message: "Los productos no agregados son aquellos que superan las cantidades de stock disponible" };
 

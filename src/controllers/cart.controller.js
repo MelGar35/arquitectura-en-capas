@@ -2,7 +2,16 @@ import cartValidator from "../validators/cart.validator.js"
 import config from "../config/config.js"
 import nodemailer from "nodemailer"
 
-//insertar nodemailer transport 
+
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  port: 587,
+  auth: {
+    user: config.NODEMAILER_ACCOUNT,
+    pass: config.NODEMAILER_PASS,
+  },
+});
+
 
 class cartController {
 
