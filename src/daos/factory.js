@@ -8,19 +8,16 @@ export let Carts;
 export let Ticket;
 
 
-//MongoDB local
-
-
 switch (config.PERSISTENCE) {
   case 'MONGO':
     console.log('Persistence from DB')
     mongoose.set('strictQuery', true)
-    mongoose.connect(config.MONGO_URI, {
+    const connect = mongoose.connect(config.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
       .then(() => console.log("DB is connected"))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
 
 
     const { default: usersMongo } = await import('./mongo/users.mongo.js')
