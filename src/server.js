@@ -23,14 +23,7 @@ initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
-//MongoDB local
-mongoose.set('strictQuery', true)
-mongoose.connect(config.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log("DB is connected"))
-  .catch((err) => console.error(err));
+
 
 //Handlebars
 app.engine('hbs', handlebars.engine({
